@@ -91,7 +91,7 @@ process (stop it from running for a while) and then resume it (continue it runni
 about a process as well, such as how long it has run for, or what
 state it is in.
 
-**Process Creation 
+**Process Creation**
 
 The first thing that the OS must do to run a program is to load its code
 and any static data (e.g., initialized variables) into memory, into the address space of the process. 
@@ -99,4 +99,45 @@ Programs initially reside on disk (or, in some
 modern systems, flash-based SSDs) in some kind of executable format;
 thus, the process of loading a program and static data into memory requires the OS to read those bytes from disk 
 and place them in memory. 
+
+Once the code and static data are loaded into memory, there are a few
+other things the OS needs to do before running the process. Some memory 
+must be allocated for the program’s run-time stack (or just stack).
+As you should likely already know, C programs use the stack for local
+variables, function parameters, and return addresses; the OS allocates
+this memory and gives it to the process. The OS will also likely initialize
+the stack with arguments; specifically, it will fill in the parameters to
+the main() function, i.e., argc and the argv array.
+
+The OS may also allocate some memory for the program’s heap. In C
+programs, the heap is used for explicitly requested dynamically-allocated
+data; programs request such space by calling malloc() and free it explicitly by calling free(). 
+The heap is needed for data structures such as
+linked lists, hash tables, trees, and other interesting data structures. The
+heap will be small at first; as the program runs, and requests more memory 
+via the malloc() library API, the OS may get involved and allocate
+more memory to the process to help satisfy such calls.
+The OS will also do some other initialization tasks, particularly as related 
+to input/output (I/O). For example, in UNIX systems, each process
+by default has three open file descriptors, for standard input, output, and
+error; these descriptors let programs easily read input from the terminal
+and print output to the screen. 
+By loading the code and static data into memory, by creating and initializing a stack, 
+and by doing other work as related to I/O setup, the OS
+has now (finally) set the stage for program execution. It thus has one last
+task: to start the program running at the entry point, namely main(). By
+jumping to the main() routine (through a specialized mechanism that
+we will discuss next chapter), the OS transfers control of the CPU to the
+newly-created process, and thus the program begins its execution.
+
+**Process States**
+
+A process can be running, ready, or blocked. A common example of being blocked: 
+when a process initiates an I/O request to a disk, it becomes blocked and thus some 
+other process can use the processor.
+
+Being moved from ready to running means the process has been scheduled; being moved from running to ready means the process has been descheduled. Once a process has become blocked (e.g., by initiating an
+I/O operation), the OS will keep it as such until some event occurs (e.g.,
+I/O completion); at that point, the process moves to the ready state again
+(and potentially immediately to running again, if the OS so decides).
 
