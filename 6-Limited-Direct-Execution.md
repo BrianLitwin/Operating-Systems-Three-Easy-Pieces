@@ -14,20 +14,20 @@ locates its entry point (i.e., the main() routine or something similar), jumps
 to it, and starts running the user’s code. It looks like this: 
 
 OS 
-Create entry for process list
-Allocate memory for program
-Load program into memory (from disk) 
-Set up stack with argc/argv
-Clear registers
-Execute call main()
+- Create entry for process list
+- Allocate memory for program
+- Load program into memory (from disk) 
+- Set up stack with argc/argv
+- Clear registers
+- Execute call main()
 
 Program 
-Run main()
-Execute return from main
+- Run main()
+- Execute return from main
 
 OS 
-Free memory of process
-Remove from process list
+- Free memory of process
+- Remove from process list
 
 Direct execution has the advantage of being fast, but there still needs to be a notion of control: 
 what if the process wishes to perform some kind of restricted operation, such
