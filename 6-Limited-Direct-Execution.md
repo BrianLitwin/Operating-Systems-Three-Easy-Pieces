@@ -3,6 +3,7 @@ The performance challenge is implementing time sharing without adding excessive 
 The control challenge is maintaining sufficient control over the CPU. 
 
 **Limited Direct Execution** 
+
 To make a program run as fast as one might expect, not surprisingly
 OS developers came up with a technique, which we call limited direct
 execution. The “direct execution” part of the idea is simple: just run the
