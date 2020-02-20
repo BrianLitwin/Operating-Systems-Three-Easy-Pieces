@@ -1,0 +1,64 @@
+The turnaround time of a job is defined s the time at which the job completes 
+minus the time at which the job rrived in the system. 
+
+FIFO does relatively okay
+FIFO breaks down under the Convoy Effect. The Convoy Effect where a number of 
+relatively-short potential consumers of a resource get queued behind a heavyweight 
+resource consumer. 
+
+
+Shortest Job First provides a slight improvement to FIFO under certain conditions: 
+if the jobs arrive at the same time and you know the lengths of the jobs. 
+It runs the shortest job first, then the next shortest, and so-on. But all jobs arriving
+at the same time is unrealistic, and it too is vulnerable to the convoy effect. 
+
+Shortest Time To Completion First: Any time a new
+job enters the system, the STCF scheduler determines which of the remaining jobs 
+(including the new job) has the least time left, and schedules that one. 
+
+Response Time: We define response time as the time from when the job arrives in a
+system to the first time it is scheduled. 
+
+As you might be thinking, STCF and related disciplines are not particularly good for response time. 
+If three jobs arrive at the same time,
+for example, the third job has to wait for the previous two jobs to run in
+their entirety before being scheduled just once.
+
+Round-Robin: RR runs a job for a time slice (sometimes called a scheduling quantum) 
+and then switches to the next job in the run queue. It repeatedly does so until the 
+jobs are inished. It does well if we are measuring response time, but poorly if we are
+measuring turnaround time. 
+
+Amortization: The general technique of amortization is commonly used in systems
+when there is a fixed cost to some operation. By incurring that cost less
+often (i.e., by performing the operation fewer times), the total cost to the
+system is reduced. For example, if the time slice is set to 10 ms, and the
+context-switch cost is 1 ms, roughly 10% of time is spent context switching and is thus wasted. 
+If we want to amortize this cost, we can increase
+the time slice, e.g., to 100 ms. In this case, less than 1% of time is spent
+context switching, and thus the cost of time-slicing has been amortized.
+
+More generally, any policy (such as RR) that is fair, i.e., that evenly divides 
+the CPU among active processes on a small time scale, will perform
+poorly on metrics such as turnaround time. Indeed, this is an inherent
+trade-off: if you are willing to be unfair, you can run shorter jobs to completion, 
+but at the cost of response time; if you instead value fairness, 
+response time is lowered, but at the cost of turnaround time. This type of
+trade-off is common in systems; you can’t have your cake and eat it too. 
+
+Incorporating I/O: 
+A scheduler clearly has a decision to make when a job initiates an I/O
+request, because the currently-running job won’t be using the CPU during the I/O; it is blocked waiting for I/O completion. If the I/O is sent to
+a hard disk drive, the process might be blocked for a few milliseconds or
+longer, depending on the current I/O load of the drive. Thus, the scheduler should probably schedule another job on the CPU at that time.
+The scheduler also has to make a decision when the I/O completes.
+When that occurs, an interrupt is raised, and the OS runs and moves
+the process that issued the I/O from blocked back to the ready state. Of
+course, it could even decide to run the job at that point. How should the
+OS treat each job? One solution is overlap: with
+the CPU being used by one process while waiting for the I/O of another
+process to complete. 
+
+
+
+
