@@ -76,8 +76,7 @@ kernel which clearly is a Very Bad Idea. Thus the kernel must carefully
 control what code executes upon a trap. The kernel does so by setting up 
 a trap table at boot time.
 
-The kernel does so by setting up a trap table at boot time. When the
-machine boots up, it does so in privileged (kernel) mode, and thus is free
+When the machine boots up, it does so in privileged (kernel) mode, and thus is free
 to configure machine hardware as need be. One of the first things the OS
 thus does is to tell the hardware what code to run when certain exceptional events occur.
 For example, what code should run when a harddisk interrupt takes place, when a keyboard 
