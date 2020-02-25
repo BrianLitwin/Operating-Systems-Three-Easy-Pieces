@@ -1,4 +1,4 @@
-The two main challenges in time sharing, and thus virtualizing, the CPU are performance and control. 
+The two main challenges in time sharing, and thus virtualizing, of the CPU are performance and control. 
 The performance challenge is implementing time sharing without adding excessive overhead to the system. 
 The control challenge is maintaining sufficient control over the CPU. 
 
