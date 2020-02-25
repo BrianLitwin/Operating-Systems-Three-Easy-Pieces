@@ -174,9 +174,8 @@ one). When the OS then finally executes a return-from-trap instruction,
 the soon-to-be-executing process becomes the currently-running process.
 And thus the context switch is complete.
 
-A timeline of the entire process is shown in Figure 6.3. In this example,
-Process A is running and then is interrupted by the timer interrupt. The
-hardware saves its registers (onto its kernel stack) and enters the kernel
+In this example, Process A is running and then is interrupted by the timer 
+interrupt. The hardware saves its registers (onto its kernel stack) and enters the kernel
 (switching to kernel mode). In the timer interrupt handler, the OS decides
 to switch from running Process A to Process B. At that point, it calls the
 switch() routine, which carefully saves current register values (into the
